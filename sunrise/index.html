@@ -86,7 +86,10 @@
 
             var sunriseTime = times.sunrise;
             var sunriseTimeString = sunriseTime.getHours() + ":" + sunriseTime.getMinutes() + ":" + sunriseTime.getSeconds();
-            document.getElementById("sunriseTime").textContent = "Sunrise Time: " + sunriseTimeString;
+            var sunsetTime = times.sunset;
+            var sunsetTimeString = sunsetTime.getHours() + ":" + sunsetTime.getMinutes() + ":" + sunsetTime.getSeconds();
+            document.getElementById("sunriseTime").textContent = "Sunrise Time: " + sunriseTimeString + "\n";
+            document.getElementById("sunsetTime").textContent = "Sunset Time: " + sunsetTimeString;
         }
     </script>
 </body>
