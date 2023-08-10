@@ -69,7 +69,8 @@
     <p>Enter Longitude: <input type="text" id="longitude" placeholder="Longitude"></p>
     <button onclick="calculateSunrise()">Calculate Sunrise Time</button>
     <p id="sunriseTime"></p>
-
+    <br>
+    <p id="sunsetTime"></p>
     <script src=suncalc.js></script>
     <script>
         function calculateSunrise() {
@@ -88,7 +89,7 @@
             var sunriseTimeString = sunriseTime.getHours() + ":" + sunriseTime.getMinutes() + ":" + sunriseTime.getSeconds();
             var sunsetTime = times.sunset;
             var sunsetTimeString = sunsetTime.getHours() + ":" + sunsetTime.getMinutes() + ":" + sunsetTime.getSeconds();
-            document.getElementById("sunriseTime").textContent = "Sunrise Time: " + sunriseTimeString + "\n";
+            document.getElementById("sunriseTime").textContent = "Sunrise Time: " + sunriseTimeString;
             document.getElementById("sunsetTime").textContent = "Sunset Time: " + sunsetTimeString;
         }
     </script>
