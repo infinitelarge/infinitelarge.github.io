@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>leaflet demo</title>
+    <link href="https://cdn.bootcss.com/leaflet/1.3.4/leaflet.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/leaflet/1.3.4/leaflet.js"></script>
+    <script src="data.js"></script>
+    <style>
+        .map {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>leaflet demo</h2>
+    <div id="map" class="map"></div>
+    <script>
+        //mapbox地图服务
+        var mapboxUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+        //定义版权信息
+        var mapAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">《慕课网：WebGIS入门进阶》</a> contributors, ' +
+            '<a href="http://giscafer.com/">giscafer</a>, ' +
+            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
+
+        // 定义两个图层，影像图层和街道图层（这里是有了mapbox地图服务）
+        var satellites = L.tileLayer(mapboxUrl, { id: 'mapbox.satellite', attribution: mapAttr })
+        var streets = L.tileLayer(mapboxUrl, { id: 'mapbox.streets', attribution: mapAttr })
+
+        //地图实例
+        var map = L.map('map', {
+            center: [30, 120],
+            zoom: 4,
+            layers: [satellites, streets]
+        });
+        //leaflets图层切换
+        var baseLayers = {
+            "卫星影像图层": satellites,
+            "街道图层": streets
+        };
+        L.control.layers(baseLayers).addTo(map);
+        //切片图层
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', { foo: 'bar' }).addTo(map);
+        //绘制要素
+        var latlngs = [
+            [45.51, 122.68],
+            [44.877, 122.43],
+            [44.04, 118.2]
+        ];
+        //var polyline = L.polyline(latlngs, { color: 'red' }).addTo(map);
+        //读取台风数据中的路径点
+        function dataHanlder() {
+            var forecast = typhoonTestData[0]['points'];
+            var polylinepoints = [];
+            for (var i = 0; i < forecast.length; i++) {
+                var poi = forecast[i];
+                var lat = Number(poi['lat']);
+                var lng = Number(poi['lng']);
+                polylinepoints.push([lat, lng]);
+
+            }
+            return polylinepoints
+        }
+        //静态绘制折线
+        var typhoonpoints = dataHanlder();
+        var land = typhoonTestData[0]['land'][0]
+        // //var typhoonpolyline = L.polyline(typhoonpoints, { color: 'blue' }).addTo(map);
+        // var typhoonIcon = L.icon({
+        //     iconUrl: './typhoon.png',
+        //     iconSize: [28, 28],
+        //     iconAnchor: [10, 10]
+        // });
+        // L.marker([18.7, 119.3]).addTo(map)
+        //     .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+        //     .openPopup();
+        // 动态绘制折线
+        var typhoonpolyline
+        var typhoonmarker
+        function animateDrawLine() {
+            var lineLength = typhoonpoints.length;
+            var drawPoints = [];
+            var num = 0;
+            var timer = setInterval(function () {
+                if (num <= lineLength) {
+                    drawPoints.push(typhoonpoints[num]);
+                    num++
+
+                    if (typhoonpolyline && num != lineLength) {
+                        map.removeLayer(typhoonpolyline);
+                        typhoonpolyline = null;
+                    }
+
+                    if (typhoonmarker && num != lineLength) {
+                        map.removeLayer(typhoonmarker);
+                        typhoonmarker = null;
+                    }
+
+                    //使用更新后数据点绘制折线和标志
+                    typhoonpolyline = L.polyline(drawPoints, { color: 'blue' }).addTo(map);
+
+                    if (num === lineLength) {
+                        //台风最后一个点，自动弹窗
+                        map.removeLayer(typhoonmarker);
+                        L.marker(drawPoints[num - 1]).addTo(map)
+                            .bindPopup("<b>" + typhoonTestData[0]['name'] + "</b><br>" + land['info'] + "<br>" + land['landtime'] + "<br>经度：" + land['lng'] + "<br>纬度：" + land['lat'] + "<br>强度：" + land['strong'] + "<br>")
+                            .openPopup();
+
+                    }
+                    else {
+                        typhoonmarker = L.marker(drawPoints[num - 1]).addTo(map);
+                    }
+
+                } else {
+                    //清除定时器
+                    clearInterval(timer)
+                }
+            }, 300);
+        }
+        animateDrawLine();
+
+    </script>
+</body>
+
+</html>
