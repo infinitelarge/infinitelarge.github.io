@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sunrise Time Calculator</title>
+</head>
+<body>
+    <h1>Sunrise Time Calculator</h1>
+    
+    <p>Enter Latitude: <input type="text" id="latitude" placeholder="Latitude"></p>
+    <p>Enter Longitude: <input type="text" id="longitude" placeholder="Longitude"></p>
+    <button onclick="calculateSunrise()">Calculate Sunrise Time</button>
+    <p id="sunriseTime"></p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/2.0.0/suncalc.min.js"></script>
+    <script>
+        function calculateSunrise() {
+            var latitude = parseFloat(document.getElementById("latitude").value);
+            var longitude = parseFloat(document.getElementById("longitude").value);
+
+            if (isNaN(latitude) || isNaN(longitude)) {
+                alert("Please enter valid latitude and longitude values.");
+                return;
+            }
+
+            var date = new Date();
+            var times = SunCalc.getTimes(date, latitude, longitude);
+
+            var sunriseTime = times.sunrise;
+            var sunriseTimeString = sunriseTime.getHours() + ":" + sunriseTime.getMinutes() + ":" + sunriseTime.getSeconds();
+            document.getElementById("sunriseTime").textContent = "Sunrise Time: " + sunriseTimeString;
+        }
+    </script>
+</body>
+</html>
