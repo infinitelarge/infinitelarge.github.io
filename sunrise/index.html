@@ -65,6 +65,26 @@
             text-align: center;
             font-size: 18px;
         }
+        #sunriseEnd{
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+        #sunsetStart{
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+        #dawnStart{
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+        #duskEnd{
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -77,6 +97,8 @@
     <p id="sunsetTime"></p>
     <p id="sunriseEnd"></p>
     <p id="sunsetStart"></p>
+    <p id="dawnStart"></p>
+    <p id="duskEnd"></p>
     <script src=suncalc.js></script>
     <script>
         function calculateSunrise() {
@@ -99,10 +121,16 @@
             var sunriseEndString = sunriseEnd.getHours() + ":" + sunriseEnd.getMinutes() + ":" + sunriseEnd.getSeconds();
             var sunsetStart = times.sunsetStart;
             var sunsetStartString = sunsetStart.getHours() + ":" + sunsetStart.getMinutes() + ":" + sunsetStart.getSeconds();
+            var dawnStart = times.dawn;
+            var dawnStartString = dawnStart.getHours() + ":" + dawnStart.getMinutes() + ":" + dawnStart.getSeconds();
+            var duskEnd = time.dusk;
+            var duskEndString = duskEnd.getHours() + ":" + duskEnd.getMinutes() + ":" + duskEnd.getSeconds();
             document.getElementById("sunriseTime").textContent = "Sunrise Time: " + sunriseTimeString;
             document.getElementById("sunsetTime").textContent = "Sunset Time: " + sunsetTimeString;
             document.getElementById("sunriseEnd").textContent = "SunriseEnd Time: " + sunriseEndString;
             document.getElementById("sunsetStart").textContent = "SunsetStart Time: " + sunsetStartString;
+            document.getElementById("dawnStart").textContent = "DawnStart Time: " + dawnStartString;
+            document.getElementById("duskEnd").textContent = "DuskEnd Time: " + duskEndString;
         }
     </script>
 </body>
