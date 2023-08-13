@@ -94,8 +94,14 @@
             var sunriseTimeString = sunriseTime.getHours() + ":" + sunriseTime.getMinutes() + ":" + sunriseTime.getSeconds();
             var sunsetTime = times.sunset;
             var sunsetTimeString = sunsetTime.getHours() + ":" + sunsetTime.getMinutes() + ":" + sunsetTime.getSeconds();
+            var sunriseEnd = times.sunriseEnd;
+            var sunriseEndString = sunriseEnd.getHours() + ":" + sunriseEnd.getMinutes() + ":" + sunriseEnd.getSeconds();
+            var sunsetStart = times.sunsetStart;
+            var sunsetStartString = sunsetStart.getHours() + ":" + sunsetStart.getMinutes() + ":" + sunsetStart.getSeconds();
             document.getElementById("sunriseTime").textContent = "Sunrise Time: " + sunriseTimeString;
             document.getElementById("sunsetTime").textContent = "Sunset Time: " + sunsetTimeString;
+            document.getElementById("sunriseEnd").textContent = "SunriseEnd Time: " + sunriseEndString;
+            document.getElementById("sunsetStart").textContent = "SunsetStart Time: " + sunsetStartString;
         }
     </script>
 </body>
