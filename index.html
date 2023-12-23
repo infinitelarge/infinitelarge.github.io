@@ -52,5 +52,27 @@
     </script>
     <a href="/typhoon" class="styled-link">Typhoon</a>
     <a href="/sunrise" class="sunrisew">sunrise</a>
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+    </script>
+    <script type="module">
+      import { GoogleGenerativeAI } from "@google/generative-ai";
+
+      // Fetch your API_KEY
+      const API_KEY = "...";
+
+      // Access your API key (see "Set up your API key" above)
+      const genAI = new GoogleGenerativeAI(${{ secrets.AAAA }});
+
+      // ...
+
+      const model = genAI.getGenerativeModel({ model: "MODEL_NAME"});
+
+      // ...
+    </script>
 </body>
 </html>
